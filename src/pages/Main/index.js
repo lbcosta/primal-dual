@@ -43,7 +43,10 @@ export default function Main() {
 
   return (
     <PageWrapper>
-      <PageLogo src={Logo} />
+      <PageLogo>
+        <img src={Logo} alt="PrimalDual" />
+        <h2>Converter</h2>
+      </PageLogo>
       <PageContent>
         <Container>
           <StaticSide>

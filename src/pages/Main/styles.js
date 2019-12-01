@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-export const PageLogo = styled.img`
+export const PageLogo = styled.div`
+  background-color: #fff;
   border-radius: 5px;
   width: 20%;
 
@@ -9,6 +10,20 @@ export const PageLogo = styled.img`
 
   :hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+
+  img {
+    border-radius: 5px;
+    max-width: 100%;
+  }
+
+  h2 {
+    transform: translateY(-10px);
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    background: linear-gradient(to right, #e84118 0%, #4cd137 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 `;
 
