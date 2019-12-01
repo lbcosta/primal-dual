@@ -54,7 +54,9 @@ export const PageContent = styled.div`
 
 export const Container = styled.div`
   display: flex;
-  border: 1px red solid;
+  /* border: 1px #f00 solid; */
+  width: 95%;
+  height: 95%;
 
   &,
   & > div {
@@ -76,13 +78,26 @@ export const DynamicSide = styled.div``;
 
 export const Equation = styled.ul`
   display: flex;
+  align-items: center;
   min-height: 38px;
 `;
 
-export const Variable = styled.li``;
+export const Variable = styled.li`
+  input[type="number"] {
+    width: 80px;
+    height: 40px;
+    margin: 5px;
+  }
+
+  > div {
+    display: inline-block;
+    width: 80px;
+    margin-left: 5px;
+  }
+`;
 
 export const AddButton = styled.button`
-  background-color: rgba(116, 185, 255, 0.35);
+  background-color: rgba(116, 185, 255, 0.3);
   border: 1.2px gray dashed;
   :active {
     transform: translateY(5px);
@@ -92,9 +107,11 @@ export const AddButton = styled.button`
 export const AddConstraintButton = styled(AddButton)`
   width: 100%;
   height: 30px;
+  margin-top: 5px;
 `;
 
 export const AddVariableButton = styled(AddButton)`
   width: 30px;
-  height: 30px;
+  height: 40px;
+  margin-left: 5px;
 `;
