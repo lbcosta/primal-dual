@@ -9,7 +9,9 @@ import {
   StaticSide,
   DynamicSide,
   Equation,
-  Variable
+  Variable,
+  AddConstraintButton,
+  AddVariableButton
 } from "./styles";
 import Logo from "../../assets/img/Logo.png";
 
@@ -35,7 +37,7 @@ export default function Main() {
 
   function buttonOrSpan(actualIdx, arr) {
     return actualIdx === arr.length - 1 ? (
-      <button type="button">+</button>
+      <AddVariableButton type="button">+</AddVariableButton>
     ) : (
       <span>+</span>
     );
@@ -88,7 +90,7 @@ export default function Main() {
               </Equation>
             ))}
 
-            <button type="button">+</button>
+            <AddConstraintButton type="button">+</AddConstraintButton>
           </DynamicSide>
         </Container>
       </PageContent>

@@ -80,3 +80,21 @@ export const Equation = styled.ul`
 `;
 
 export const Variable = styled.li``;
+
+export const AddButton = styled.button`
+  background-color: rgba(116, 185, 255, 0.35);
+  border: 1.2px gray dashed;
+  :active {
+    transform: translateY(5px);
+  }
+`;
+
+export const AddConstraintButton = styled(AddButton)`
+  width: 100%;
+  height: 30px;
+`;
+
+export const AddVariableButton = styled(AddButton)`
+  width: 30px;
+  height: 30px;
+`;
