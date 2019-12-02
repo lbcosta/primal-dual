@@ -13,7 +13,8 @@ import {
   Equation,
   Variable,
   AddConstraintButton,
-  AddVariableButton
+  AddVariableButton,
+  EqualityConstraints
 } from "./styles";
 import Logo from "../../assets/img/Logo.png";
 
@@ -231,7 +232,7 @@ export default function Main() {
                 )}
               </Equation>
             ))}
-
+            <EqualityConstraints />
             <AddConstraintButton type="button" onClick={addConstraint}>
               +
             </AddConstraintButton>

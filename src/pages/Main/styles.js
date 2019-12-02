@@ -140,3 +140,9 @@ export const AddVariableButton = styled(AddButton)`
   height: 40px;
   margin-left: 5px;
 `;
+
+export const EqualityConstraints = styled.ul`
+  li {
+    display: inline;
+  }
+`;
