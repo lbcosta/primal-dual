@@ -54,13 +54,22 @@ export const PageContent = styled.div`
 
 export const Container = styled.div`
   display: flex;
-  /* border: 1px #f00 solid; */
   width: 95%;
   height: 95%;
 
   &,
   & > div {
-    min-width: 300px;
+    min-width: 150px;
+  }
+
+  p,
+  span {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  input {
+    text-align: center;
   }
 `;
 
@@ -68,8 +77,20 @@ export const StaticSide = styled.div`
   & > div {
     display: flex;
     align-items: center;
+    margin: 5px;
     > div {
       min-width: 100px;
+      margin-right: 10px;
+    }
+
+    &:nth-of-type(2) {
+      position: relative;
+
+      p {
+        position: absolute;
+        right: 10px;
+        margin-top: 15px;
+      }
     }
   }
 `;
