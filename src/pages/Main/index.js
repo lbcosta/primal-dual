@@ -97,7 +97,11 @@ export default function Main() {
     );
   }
 
-  function handleValueChange(value, constraintActualIdx, variableActualIdx) {
+  function handleConstraintValueChange(
+    value,
+    constraintActualIdx,
+    variableActualIdx
+  ) {
     setConstraints(
       constraints.map((constraint, constraintIdx) =>
         constraintIdx !== constraintActualIdx
@@ -112,6 +116,14 @@ export default function Main() {
     );
   }
 
+  function handleObjFunctionValueChange(value, variableIdx) {
+    setObjFunction(
+      objFunction.map((variable, idx) =>
+        idx !== variableIdx ? variable : value
+      )
+    );
+  }
+
   function fillEquation(value, variableIdx, arr, signal, constraintIdx) {
     if (variableIdx !== arr.length - 1) {
       return (
@@ -120,7 +132,11 @@ export default function Main() {
             type="number"
             value={value}
             onChange={event =>
-              handleValueChange(event.target.value, constraintIdx, variableIdx)
+              handleConstraintValueChange(
+                event.target.value,
+                constraintIdx,
+                variableIdx
+              )
             }
           />
           <span>
@@ -143,7 +159,11 @@ export default function Main() {
             type="number"
             value={value}
             onChange={event =>
-              handleValueChange(event.target.value, constraintIdx, variableIdx)
+              handleConstraintValueChange(
+                event.target.value,
+                constraintIdx,
+                variableIdx
+              )
             }
           />
           <AddVariableButton type="button" onClick={addVariable}>
@@ -179,7 +199,13 @@ export default function Main() {
             <Equation>
               {objFunction.map((variable, idx) => (
                 <Variable>
-                  <input type="number" value={variable} />
+                  <input
+                    type="number"
+                    value={variable}
+                    onChange={event =>
+                      handleObjFunctionValueChange(event.target.value, idx)
+                    }
+                  />
                   <span>
                     X <sub>{idx + 1}</sub>{" "}
                   </span>
