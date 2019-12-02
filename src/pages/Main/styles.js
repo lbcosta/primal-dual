@@ -9,7 +9,7 @@ export const PageLogo = styled.div`
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   :hover {
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   }
 
   img {
@@ -88,7 +88,7 @@ export const StaticSide = styled.div`
 
       p {
         position: absolute;
-        right: 10px;
+        right: 4px;
         margin-top: 15px;
       }
     }
@@ -118,10 +118,14 @@ export const Variable = styled.li`
 `;
 
 export const AddButton = styled.button`
-  background-color: rgba(116, 185, 255, 0.3);
+  background-color: rgba(116, 185, 255, 0.1);
   border: 1.2px gray dashed;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
   :active {
     transform: translateY(5px);
+  }
+  :hover {
+    background-color: rgba(116, 185, 255, 0.3);
   }
 `;
 

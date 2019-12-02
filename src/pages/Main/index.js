@@ -70,11 +70,16 @@ export default function Main() {
 
   function addVariable() {
     setObjFunction([...objFunction, 0]);
+
     setConstraints(
-      constraints.map(constraint => ({
-        ...constraint,
-        values: [...constraint.values, 0]
-      }))
+      constraints.map(constraint => {
+        const newValues = [...constraint.values];
+        newValues.splice(newValues.length - 1, 0, 0);
+        return {
+          ...constraint,
+          values: newValues
+        };
+      })
     );
   }
 
