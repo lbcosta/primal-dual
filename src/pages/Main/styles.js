@@ -37,8 +37,9 @@ export const PageWrapper = styled.div`
 
 export const PageContent = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
 
   height: 80%;
   width: 80%;
@@ -54,8 +55,8 @@ export const PageContent = styled.div`
 
 export const Container = styled.div`
   display: flex;
-  width: 95%;
-  height: 95%;
+  flex: 7;
+  overflow: auto;
 
   &,
   & > div {
@@ -141,7 +142,33 @@ export const AddVariableButton = styled(AddButton)`
   margin-left: 5px;
 `;
 
+export const ConversionButton = styled.div`
+  flex: 1;
+
+  button {
+    display: block;
+    margin: auto;
+    padding: 20px 20px;
+
+    border: none;
+    border-radius: 5px;
+
+    font-weight: bold;
+    font-size: 16px;
+
+    color: #fff;
+    background-color: rgb(116, 185, 255);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: background-color 150ms ease-in-out;
+
+    :hover {
+      background-color: #0097e6;
+    }
+  }
+`;
+
 export const EqualityConstraints = styled.ul`
+  margin-top: 10px;
   li {
     display: inline;
 

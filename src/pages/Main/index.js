@@ -14,7 +14,8 @@ import {
   Variable,
   AddConstraintButton,
   AddVariableButton,
-  EqualityConstraints
+  EqualityConstraints,
+  ConversionButton
 } from "./styles";
 import Logo from "../../assets/img/Logo.png";
 
@@ -282,6 +283,9 @@ export default function Main() {
             </AddConstraintButton>
           </DynamicSide>
         </Container>
+        <ConversionButton>
+          <button type="button">Converter!</button>
+        </ConversionButton>
       </PageContent>
     </PageWrapper>
   );
