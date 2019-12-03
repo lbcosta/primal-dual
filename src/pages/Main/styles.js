@@ -79,8 +79,8 @@ export const StaticSide = styled.div`
     align-items: center;
     margin: 5px;
     > div {
-      min-width: 100px;
-      margin-right: 10px;
+      min-width: 50px;
+      margin: 0 10px 0 50px;
     }
 
     &:nth-of-type(2) {
@@ -112,7 +112,7 @@ export const Variable = styled.li`
 
   > div {
     display: inline-block;
-    width: 80px;
+    width: 40px;
     margin-left: 5px;
   }
 `;
@@ -144,5 +144,15 @@ export const AddVariableButton = styled(AddButton)`
 export const EqualityConstraints = styled.ul`
   li {
     display: inline;
+
+    > div {
+      display: inline-block;
+      width: 40px;
+      margin: 0 5px;
+    }
+
+    span ~ span {
+      margin-right: 10px;
+    }
   }
 `;

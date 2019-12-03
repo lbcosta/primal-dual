@@ -40,6 +40,17 @@ const signalOptions = [
   }
 ];
 
+const selectCustomStyle = {
+  dropdownIndicator: (provided, state) => ({
+    ...provided,
+    display: "none"
+  }),
+  indicatorSeparator: (provided, state) => ({
+    ...provided,
+    display: "none"
+  })
+};
+
 export default function Main() {
   const [objective, setObjective] = useState(objectiveOptions[0]);
   const [objFunction, setObjFunction] = useState([6, 4]);
@@ -53,7 +64,10 @@ export default function Main() {
       signal: signalOptions[1]
     }
   ]);
-  const [equalityConstraints, setEqualityConstraints] = useState([]);
+  const [equalityConstraints, setEqualityConstraints] = useState([
+    signalOptions[0],
+    signalOptions[0]
+  ]);
 
   function buttonOrSpan(actualIdx, arr) {
     return actualIdx === arr.length - 1 ? (
@@ -82,6 +96,8 @@ export default function Main() {
         };
       })
     );
+
+    setEqualityConstraints([...equalityConstraints, signalOptions[0]]);
   }
 
   function addConstraint() {
@@ -130,6 +146,14 @@ export default function Main() {
     );
   }
 
+  function handleEqualityConstraintSignalChange(value, constraintIdx) {
+    setEqualityConstraints(
+      equalityConstraints.map((equalityConstraint, idx) =>
+        idx !== constraintIdx ? equalityConstraint : value
+      )
+    );
+  }
+
   function fillEquation(value, variableIdx, arr, signal, constraintIdx) {
     if (variableIdx !== arr.length - 1) {
       return (
@@ -160,6 +184,7 @@ export default function Main() {
               handleSignalChange(value, constraintIdx, constraintIdx)
             }
             options={signalOptions}
+            styles={selectCustomStyle}
           />
           <input
             type="number"
@@ -194,6 +219,7 @@ export default function Main() {
                 value={objective}
                 onChange={setObjective}
                 options={objectiveOptions}
+                styles={selectCustomStyle}
               />
               <span>Z =</span>
             </div>
@@ -232,7 +258,25 @@ export default function Main() {
                 )}
               </Equation>
             ))}
-            <EqualityConstraints />
+            <EqualityConstraints>
+              {equalityConstraints.map((equalityConstraint, idx) => (
+                <li>
+                  <span>
+                    X <sub>{idx + 1}</sub>
+                  </span>
+                  <Select
+                    value={equalityConstraint}
+                    onChange={value =>
+                      handleEqualityConstraintSignalChange(value, idx)
+                    }
+                    options={signalOptions}
+                    styles={selectCustomStyle}
+                  />
+                  <span>0</span>
+                  {idx !== equalityConstraints.length - 1 && <span>,</span>}
+                </li>
+              ))}
+            </EqualityConstraints>
             <AddConstraintButton type="button" onClick={addConstraint}>
               +
             </AddConstraintButton>
