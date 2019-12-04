@@ -71,11 +71,26 @@ export default function Main() {
   ]);
 
   function convert() {
-    const dualObjFunction = [];
-    const dualConstraints = [];
-    const dualEqConstraints = [];
+    const dualObjFunction = constraints.map(
+      constraint => constraint.values.slice(-1)[0]
+    );
+    const dualEqConstraints = constraints.map(constraint => constraint.signal);
 
-    for (let idx = 0; idx <= objFunction.length; idx++) {}
+    const variableMatrix = constraints.map(constraint =>
+      constraint.values.slice(0, -1)
+    );
+    const dualVariableMatrix = variableMatrix[0].map((col, i) =>
+      variableMatrix.map(row => row[i])
+    );
+
+    // const dualConstraints = equalityConstraints.map((eqConst, eqConstIdx) => ({
+    //   values: dualVariableMatrix[eqConstIdx],
+    //   signal: eqConst
+    // }))
+
+    console.log("objFun", dualObjFunction);
+    console.log("eqConst", dualEqConstraints);
+    console.log("const", dualVariableMatrix);
   }
 
   function buttonOrSpan(actualIdx, arr) {
@@ -140,7 +155,9 @@ export default function Main() {
           : {
               ...constraint,
               values: constraint.values.map((variable, variableIdx) =>
-                variableIdx !== variableActualIdx ? variable : value
+                variableIdx !== variableActualIdx
+                  ? variable
+                  : parseInt(value, 10)
               )
             }
       )
