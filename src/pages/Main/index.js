@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import Tableau from "../../components/Tableau";
 
 import { FaGreaterThanEqual, FaLessThanEqual, FaEquals } from "react-icons/fa";
 
@@ -78,11 +79,21 @@ export default function Main() {
   ]);
   const [converted, setConverted] = useState(false);
 
+  const [dualObjective, setDualObjective] = useState();
+  const [dualObjFunction, setDualObjFunction] = useState();
+  const [dualConstraints, setDualConstraints] = useState();
+  const [dualEqConstraints, setDualEqConstraints] = useState();
+
   function convert() {
-    const dualObjFunction = constraints.map(
-      constraint => constraint.values.slice(-1)[0]
+    setDualObjective(
+      objective.value === "min" ? objectiveOptions[1] : objectiveOptions[0]
     );
-    const dualEqConstraints = constraints.map(constraint => constraint.signal);
+
+    setDualObjFunction(
+      constraints.map(constraint => constraint.values.slice(-1)[0])
+    );
+
+    setDualEqConstraints(constraints.map(constraint => constraint.signal));
 
     const variableMatrix = constraints.map(constraint =>
       constraint.values.slice(0, -1)
@@ -91,14 +102,13 @@ export default function Main() {
       variableMatrix.map(row => row[i])
     );
 
-    const dualConstraints = equalityConstraints.map((eqConst, eqConstIdx) => ({
-      values: dualVariableMatrix[eqConstIdx],
-      signal: eqConst
-    }));
+    setDualConstraints(
+      equalityConstraints.map((eqConst, eqConstIdx) => ({
+        values: dualVariableMatrix[eqConstIdx],
+        signal: eqConst
+      }))
+    );
 
-    console.log("objFun", dualObjFunction);
-    console.log("eqConst", dualEqConstraints);
-    console.log("const", dualConstraints);
     setConverted(true);
   }
 
@@ -326,7 +336,12 @@ export default function Main() {
             </ConversionButton>
           </Front>
           <Back>
-            <p>back</p>
+            <Tableau
+              objective={dualObjective}
+              objFunction={dualObjFunction}
+              constraints={dualConstraints}
+              equalityConstraints={dualEqConstraints}
+            />
           </Back>
         </Inner>
       </PageContent>
