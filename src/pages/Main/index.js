@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 
-import { FaGreaterThanEqual, FaLessThanEqual } from "react-icons/fa";
+import { FaGreaterThanEqual, FaLessThanEqual, FaEquals } from "react-icons/fa";
 
 import {
   PageLogo,
@@ -38,6 +38,10 @@ const signalOptions = [
   {
     value: ">=",
     label: <FaGreaterThanEqual />
+  },
+  {
+    value: "=",
+    label: <FaEquals />
   }
 ];
 
@@ -83,14 +87,14 @@ export default function Main() {
       variableMatrix.map(row => row[i])
     );
 
-    // const dualConstraints = equalityConstraints.map((eqConst, eqConstIdx) => ({
-    //   values: dualVariableMatrix[eqConstIdx],
-    //   signal: eqConst
-    // }))
+    const dualConstraints = equalityConstraints.map((eqConst, eqConstIdx) => ({
+      values: dualVariableMatrix[eqConstIdx],
+      signal: eqConst
+    }));
 
     console.log("objFun", dualObjFunction);
     console.log("eqConst", dualEqConstraints);
-    console.log("const", dualVariableMatrix);
+    console.log("const", dualConstraints);
   }
 
   function buttonOrSpan(actualIdx, arr) {
