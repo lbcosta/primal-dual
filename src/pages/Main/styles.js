@@ -25,6 +25,16 @@ export const PageLogo = styled.div`
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
+  @media only screen and (max-width: 1000px) {
+    width: 250px;
+    ::after {
+      content: "Esta ferramenta não funciona em telas pequenas :(";
+      font-family: "Montserrat", sans-serif;
+      color: #aaa;
+      text-align: center;
+    }
+  }
 `;
 
 export const PageWrapper = styled.div`
@@ -38,8 +48,10 @@ export const PageWrapper = styled.div`
 export const PageContent = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
+
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 
   height: 80%;
   width: 80%;
