@@ -70,6 +70,14 @@ export default function Main() {
     signalOptions[0]
   ]);
 
+  function convert() {
+    const dualObjFunction = [];
+    const dualConstraints = [];
+    const dualEqConstraints = [];
+
+    for (let idx = 0; idx <= objFunction.length; idx++) {}
+  }
+
   function buttonOrSpan(actualIdx, arr) {
     return actualIdx === arr.length - 1 ? (
       <AddVariableButton type="button" onClick={addVariable}>
@@ -158,7 +166,7 @@ export default function Main() {
   function fillEquation(value, variableIdx, arr, signal, constraintIdx) {
     if (variableIdx !== arr.length - 1) {
       return (
-        <Variable>
+        <Variable key={"vv" + value + variableIdx}>
           <input
             type="number"
             value={value}
@@ -178,7 +186,7 @@ export default function Main() {
       );
     } else {
       return (
-        <Variable>
+        <Variable key={"vv" + value}>
           <Select
             value={signal}
             onChange={value =>
@@ -231,7 +239,7 @@ export default function Main() {
           <DynamicSide>
             <Equation>
               {objFunction.map((variable, idx) => (
-                <Variable>
+                <Variable key={"v" + idx}>
                   <input
                     type="number"
                     value={variable}
@@ -247,7 +255,7 @@ export default function Main() {
               ))}
             </Equation>
             {constraints.map((constraint, constraintIdx) => (
-              <Equation>
+              <Equation key={"eq" + constraintIdx}>
                 {constraint.values.map((value, idx, arr) =>
                   fillEquation(
                     value,
@@ -261,7 +269,7 @@ export default function Main() {
             ))}
             <EqualityConstraints>
               {equalityConstraints.map((equalityConstraint, idx) => (
-                <li>
+                <li key={"ec" + idx}>
                   <span>
                     X <sub>{idx + 1}</sub>
                   </span>
@@ -284,7 +292,9 @@ export default function Main() {
           </DynamicSide>
         </Container>
         <ConversionButton>
-          <button type="button">Converter!</button>
+          <button type="button" onClick={convert}>
+            Converter!
+          </button>
         </ConversionButton>
       </PageContent>
     </PageWrapper>
