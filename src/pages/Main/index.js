@@ -15,7 +15,10 @@ import {
   AddConstraintButton,
   AddVariableButton,
   EqualityConstraints,
-  ConversionButton
+  ConversionButton,
+  Front,
+  Back,
+  Inner
 } from "./styles";
 import Logo from "../../assets/img/Logo.png";
 
@@ -73,6 +76,7 @@ export default function Main() {
     signalOptions[0],
     signalOptions[0]
   ]);
+  const [converted, setConverted] = useState(false);
 
   function convert() {
     const dualObjFunction = constraints.map(
@@ -95,6 +99,7 @@ export default function Main() {
     console.log("objFun", dualObjFunction);
     console.log("eqConst", dualEqConstraints);
     console.log("const", dualConstraints);
+    setConverted(true);
   }
 
   function buttonOrSpan(actualIdx, arr) {
@@ -242,81 +247,88 @@ export default function Main() {
         <h2>Converter</h2>
       </PageLogo>
       <PageContent>
-        <Container>
-          <StaticSide>
-            <div>
-              <Select
-                value={objective}
-                onChange={setObjective}
-                options={objectiveOptions}
-                styles={selectCustomStyle}
-              />
-              <span>Z =</span>
-            </div>
-            <div>
-              <p>S.T.</p>
-            </div>
-          </StaticSide>
-          <DynamicSide>
-            <Equation>
-              {objFunction.map((variable, idx) => (
-                <Variable key={"v" + idx}>
-                  <input
-                    type="number"
-                    value={variable}
-                    onChange={event =>
-                      handleObjFunctionValueChange(event.target.value, idx)
-                    }
-                  />
-                  <span>
-                    X <sub>{idx + 1}</sub>{" "}
-                  </span>
-                  {buttonOrSpan(idx, objFunction)}
-                </Variable>
-              ))}
-            </Equation>
-            {constraints.map((constraint, constraintIdx) => (
-              <Equation key={"eq" + constraintIdx}>
-                {constraint.values.map((value, idx, arr) =>
-                  fillEquation(
-                    value,
-                    idx,
-                    arr,
-                    constraint.signal,
-                    constraintIdx
-                  )
-                )}
-              </Equation>
-            ))}
-            <EqualityConstraints>
-              {equalityConstraints.map((equalityConstraint, idx) => (
-                <li key={"ec" + idx}>
-                  <span>
-                    X <sub>{idx + 1}</sub>
-                  </span>
+        <Inner converted={converted}>
+          <Front>
+            <Container>
+              <StaticSide>
+                <div>
                   <Select
-                    value={equalityConstraint}
-                    onChange={value =>
-                      handleEqualityConstraintSignalChange(value, idx)
-                    }
-                    options={signalOptions}
+                    value={objective}
+                    onChange={setObjective}
+                    options={objectiveOptions}
                     styles={selectCustomStyle}
                   />
-                  <span>0</span>
-                  {idx !== equalityConstraints.length - 1 && <span>,</span>}
-                </li>
-              ))}
-            </EqualityConstraints>
-            <AddConstraintButton type="button" onClick={addConstraint}>
-              +
-            </AddConstraintButton>
-          </DynamicSide>
-        </Container>
-        <ConversionButton>
-          <button type="button" onClick={convert}>
-            Converter!
-          </button>
-        </ConversionButton>
+                  <span>Z =</span>
+                </div>
+                <div>
+                  <p>S.T.</p>
+                </div>
+              </StaticSide>
+              <DynamicSide>
+                <Equation>
+                  {objFunction.map((variable, idx) => (
+                    <Variable key={"v" + idx}>
+                      <input
+                        type="number"
+                        value={variable}
+                        onChange={event =>
+                          handleObjFunctionValueChange(event.target.value, idx)
+                        }
+                      />
+                      <span>
+                        X <sub>{idx + 1}</sub>{" "}
+                      </span>
+                      {buttonOrSpan(idx, objFunction)}
+                    </Variable>
+                  ))}
+                </Equation>
+                {constraints.map((constraint, constraintIdx) => (
+                  <Equation key={"eq" + constraintIdx}>
+                    {constraint.values.map((value, idx, arr) =>
+                      fillEquation(
+                        value,
+                        idx,
+                        arr,
+                        constraint.signal,
+                        constraintIdx
+                      )
+                    )}
+                  </Equation>
+                ))}
+                <EqualityConstraints>
+                  {equalityConstraints.map((equalityConstraint, idx) => (
+                    <li key={"ec" + idx}>
+                      <span>
+                        X <sub>{idx + 1}</sub>
+                      </span>
+                      <Select
+                        value={equalityConstraint}
+                        onChange={value =>
+                          handleEqualityConstraintSignalChange(value, idx)
+                        }
+                        options={signalOptions}
+                        styles={selectCustomStyle}
+                      />
+                      <span>0</span>
+                      {idx !== equalityConstraints.length - 1 && <span>,</span>}
+                    </li>
+                  ))}
+                </EqualityConstraints>
+                <AddConstraintButton type="button" onClick={addConstraint}>
+                  +
+                </AddConstraintButton>
+              </DynamicSide>
+            </Container>
+            <ConversionButton>
+              <button type="button" onClick={convert}>
+                Converter!
+              </button>
+            </ConversionButton>
+          </Front>
+          <Back>
+            <p>back</p>
+          </Back>
+        </Inner>
       </PageContent>
     </PageWrapper>
   );
