@@ -37,7 +37,7 @@ export default function Tableau({
     if (variableIdx !== arr.length - 1) {
       return (
         <Variable key={"vv-" + value + variableIdx}>
-          <input type="number" value={value} />
+          <input type="number" value={value} disabled />
           <span>
             Y <sub>{variableIdx + 1}</sub>{" "}
           </span>
@@ -48,7 +48,7 @@ export default function Tableau({
       return (
         <Variable key={"vv-" + value}>
           <Select value={signal} styles={selectCustomStyle} isDisabled />
-          <input type="number" value={value} />
+          <input type="number" value={value} disabled />
         </Variable>
       );
     }
@@ -70,7 +70,7 @@ export default function Tableau({
           <Equation>
             {objFunction.map((variable, idx) => (
               <Variable key={"v-" + idx}>
-                <input type="number" value={variable} />
+                <input type="number" value={variable} disabled />
                 <span>
                   Y <sub>{idx + 1}</sub>{" "}
                 </span>
