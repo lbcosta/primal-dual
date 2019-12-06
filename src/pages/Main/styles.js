@@ -46,9 +46,6 @@ export const PageWrapper = styled.div`
 `;
 
 export const PageContent = styled.div`
-  /* display: flex;
-  flex-direction: column; */
-
   @media only screen and (max-width: 1000px) {
     display: none;
   }
@@ -204,12 +201,12 @@ export const ConversionButton = styled.div`
     font-size: 16px;
 
     color: #fff;
-    background-color: rgb(116, 185, 255);
+    background-color: #44bd32;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     transition: background-color 150ms ease-in-out;
 
     :hover {
-      background-color: #0097e6;
+      background-color: #2f8422;
     }
   }
 `;

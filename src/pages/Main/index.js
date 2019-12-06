@@ -85,6 +85,8 @@ export default function Main() {
   const [dualEqConstraints, setDualEqConstraints] = useState();
 
   function convert() {
+    const swap = objective.value === "min";
+
     setDualObjective(
       objective.value === "min" ? objectiveOptions[1] : objectiveOptions[0]
     );
@@ -93,23 +95,57 @@ export default function Main() {
       constraints.map(constraint => constraint.values.slice(-1)[0])
     );
 
-    setDualEqConstraints(constraints.map(constraint => constraint.signal));
+    setDualEqConstraints(
+      constraints.map(constraint => swapSignal(!swap, constraint.signal))
+    );
 
-    const variableMatrix = constraints.map(constraint =>
+    const variableMatrix = constraints.map((constraint, constraintIdx) =>
       constraint.values.slice(0, -1)
     );
     const dualVariableMatrix = variableMatrix[0].map((col, i) =>
-      variableMatrix.map(row => row[i])
+      variableMatrix.map(row => row[i]).concat([objFunction[i]])
     );
 
     setDualConstraints(
       equalityConstraints.map((eqConst, eqConstIdx) => ({
         values: dualVariableMatrix[eqConstIdx],
-        signal: eqConst
+        signal: swapSignal(swap, eqConst)
       }))
     );
 
     setConverted(true);
+  }
+
+  function swapSignal(swap, signal) {
+    if (swap) {
+      switch (signal.value) {
+        case "<=":
+          return signalOptions[1];
+        case ">=":
+          return signalOptions[0];
+        default:
+          return signalOptions[2];
+      }
+    } else {
+      return signal;
+    }
+  }
+
+  function reset() {
+    setObjective(objectiveOptions[0]);
+    setObjFunction([6, 4]);
+    setConstraints([
+      {
+        values: [1, 2, 6],
+        signal: signalOptions[0]
+      },
+      {
+        values: [3, 4, 8],
+        signal: signalOptions[1]
+      }
+    ]);
+    setEqualityConstraints([signalOptions[0], signalOptions[0]]);
+    setConverted(false);
   }
 
   function buttonOrSpan(actualIdx, arr) {
@@ -341,6 +377,7 @@ export default function Main() {
               objFunction={dualObjFunction}
               constraints={dualConstraints}
               equalityConstraints={dualEqConstraints}
+              reset={reset}
             />
           </Back>
         </Inner>

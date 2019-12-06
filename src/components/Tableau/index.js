@@ -26,22 +26,28 @@ export default function Tableau({
   objective,
   objFunction = [],
   constraints = [],
-  equalityConstraints = []
+  equalityConstraints = [],
+  reset
 }) {
+  function hasSumSymbol(actualIdx, arr) {
+    return actualIdx !== arr.length - 1 && <span>+</span>;
+  }
+
   function fillEquation(value, variableIdx, arr, signal, constraintIdx) {
     if (variableIdx !== arr.length - 1) {
       return (
         <Variable key={"vv-" + value + variableIdx}>
           <input type="number" value={value} />
           <span>
-            X <sub>{variableIdx + 1}</sub>{" "}
+            Y <sub>{variableIdx + 1}</sub>{" "}
           </span>
+          {hasSumSymbol(variableIdx, objFunction)}
         </Variable>
       );
     } else {
       return (
         <Variable key={"vv-" + value}>
-          <Select value={signal} styles={selectCustomStyle} />
+          <Select value={signal} styles={selectCustomStyle} isDisabled />
           <input type="number" value={value} />
         </Variable>
       );
@@ -53,8 +59,8 @@ export default function Tableau({
       <Container>
         <StaticSide>
           <div>
-            <Select value={objective} styles={selectCustomStyle} />
-            <span>Z =</span>
+            <Select value={objective} styles={selectCustomStyle} isDisabled />
+            <span>W =</span>
           </div>
           <div>
             <p>S.T.</p>
@@ -66,8 +72,9 @@ export default function Tableau({
               <Variable key={"v-" + idx}>
                 <input type="number" value={variable} />
                 <span>
-                  X <sub>{idx + 1}</sub>{" "}
+                  Y <sub>{idx + 1}</sub>{" "}
                 </span>
+                {hasSumSymbol(idx, objFunction)}
               </Variable>
             ))}
           </Equation>
@@ -82,9 +89,13 @@ export default function Tableau({
             {equalityConstraints.map((equalityConstraint, idx) => (
               <li key={"ec-" + idx}>
                 <span>
-                  X <sub>{idx + 1}</sub>
+                  Y <sub>{idx + 1}</sub>
                 </span>
-                <Select value={equalityConstraint} styles={selectCustomStyle} />
+                <Select
+                  value={equalityConstraint}
+                  styles={selectCustomStyle}
+                  isDisabled
+                />
                 <span>0</span>
                 {idx !== equalityConstraints.length - 1 && <span>,</span>}
               </li>
@@ -93,7 +104,9 @@ export default function Tableau({
         </DynamicSide>
       </Container>
       <ConversionButton>
-        <button type="button">Voltar</button>
+        <button type="button" onClick={reset}>
+          Voltar
+        </button>
       </ConversionButton>
     </>
   );
