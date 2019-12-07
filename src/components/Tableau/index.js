@@ -7,16 +7,19 @@ import {
   DynamicSide,
   Equation,
   Variable,
-  EqualityConstraints,
-  ConversionButton
+  EqualityConstraints
 } from "./styles";
 
 const selectCustomStyle = {
-  dropdownIndicator: (provided, state) => ({
+  dropdownIndicator: provided => ({
     ...provided,
     display: "none"
   }),
-  indicatorSeparator: (provided, state) => ({
+  indicatorSeparator: provided => ({
+    ...provided,
+    display: "none"
+  }),
+  placeholder: provided => ({
     ...provided,
     display: "none"
   })
@@ -103,11 +106,6 @@ export default function Tableau({
           </EqualityConstraints>
         </DynamicSide>
       </Container>
-      <ConversionButton>
-        <button type="button" onClick={reset}>
-          Voltar
-        </button>
-      </ConversionButton>
     </>
   );
 }

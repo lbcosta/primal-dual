@@ -17,9 +17,7 @@ import {
   AddVariableButton,
   EqualityConstraints,
   ConversionButton,
-  Front,
-  Back,
-  Inner
+  ContentWrapper
 } from "./styles";
 import Logo from "../../assets/img/Logo.png";
 
@@ -292,96 +290,94 @@ export default function Main() {
         <img src={Logo} alt="PrimalDual" />
         <h2>Converter</h2>
       </PageLogo>
-      <PageContent>
-        <Inner converted={converted}>
-          <Front>
-            <Container>
-              <StaticSide>
-                <div>
-                  <Select
-                    value={objective}
-                    onChange={setObjective}
-                    options={objectiveOptions}
-                    styles={selectCustomStyle}
-                  />
-                  <span>Z =</span>
-                </div>
-                <div>
-                  <p>S.T.</p>
-                </div>
-              </StaticSide>
-              <DynamicSide>
-                <Equation>
-                  {objFunction.map((variable, idx) => (
-                    <Variable key={"v" + idx}>
-                      <input
-                        type="number"
-                        value={variable}
-                        onChange={event =>
-                          handleObjFunctionValueChange(event.target.value, idx)
-                        }
-                      />
-                      <span>
-                        X <sub>{idx + 1}</sub>{" "}
-                      </span>
-                      {buttonOrSpan(idx, objFunction)}
-                    </Variable>
-                  ))}
-                </Equation>
-                {constraints.map((constraint, constraintIdx) => (
-                  <Equation key={"eq" + constraintIdx}>
-                    {constraint.values.map((value, idx, arr) =>
-                      fillEquation(
-                        value,
-                        idx,
-                        arr,
-                        constraint.signal,
-                        constraintIdx
-                      )
-                    )}
-                  </Equation>
+      <ContentWrapper>
+        <PageContent>
+          <Container>
+            <StaticSide>
+              <div>
+                <Select
+                  value={objective}
+                  onChange={setObjective}
+                  options={objectiveOptions}
+                  styles={selectCustomStyle}
+                />
+                <span>Z =</span>
+              </div>
+              <div>
+                <p>S.T.</p>
+              </div>
+            </StaticSide>
+            <DynamicSide>
+              <Equation>
+                {objFunction.map((variable, idx) => (
+                  <Variable key={"v" + idx}>
+                    <input
+                      type="number"
+                      value={variable}
+                      onChange={event =>
+                        handleObjFunctionValueChange(event.target.value, idx)
+                      }
+                    />
+                    <span>
+                      X <sub>{idx + 1}</sub>{" "}
+                    </span>
+                    {hasSumSymbol(idx - 1, objFunction)}
+                  </Variable>
                 ))}
-                <EqualityConstraints>
-                  {equalityConstraints.map((equalityConstraint, idx) => (
-                    <li key={"ec" + idx}>
-                      <span>
-                        X <sub>{idx + 1}</sub>
-                      </span>
-                      <Select
-                        value={equalityConstraint}
-                        onChange={value =>
-                          handleEqualityConstraintSignalChange(value, idx)
-                        }
-                        options={signalOptions}
-                        styles={selectCustomStyle}
-                      />
-                      <span>0</span>
-                      {idx !== equalityConstraints.length - 1 && <span>,</span>}
-                    </li>
-                  ))}
-                </EqualityConstraints>
-                <AddConstraintButton type="button" onClick={addConstraint}>
-                  +
-                </AddConstraintButton>
-              </DynamicSide>
-            </Container>
-            <ConversionButton>
-              <button type="button" onClick={convert}>
-                Converter!
-              </button>
-            </ConversionButton>
-          </Front>
-          <Back>
-            <Tableau
-              objective={dualObjective}
-              objFunction={dualObjFunction}
-              constraints={dualConstraints}
-              equalityConstraints={dualEqConstraints}
-              reset={reset}
-            />
-          </Back>
-        </Inner>
-      </PageContent>
+              </Equation>
+              {constraints.map((constraint, constraintIdx) => (
+                <Equation key={"eq" + constraintIdx}>
+                  {constraint.values.map((value, idx, arr) =>
+                    fillEquation(
+                      value,
+                      idx,
+                      arr,
+                      constraint.signal,
+                      constraintIdx
+                    )
+                  )}
+                </Equation>
+              ))}
+              <EqualityConstraints>
+                {equalityConstraints.map((equalityConstraint, idx) => (
+                  <li key={"ec" + idx}>
+                    <span>
+                      X <sub>{idx + 1}</sub>
+                    </span>
+                    <Select
+                      value={equalityConstraint}
+                      onChange={value =>
+                        handleEqualityConstraintSignalChange(value, idx)
+                      }
+                      options={signalOptions}
+                      styles={selectCustomStyle}
+                    />
+                    <span>0</span>
+                    {idx !== equalityConstraints.length - 1 && <span>,</span>}
+                  </li>
+                ))}
+              </EqualityConstraints>
+              <AddConstraintButton type="button" onClick={addConstraint}>
+                +
+              </AddConstraintButton>
+            </DynamicSide>
+          </Container>
+          <ConversionButton>
+            <button type="button" onClick={convert}>
+              Converter!
+            </button>
+          </ConversionButton>
+        </PageContent>
+        <PageContent>
+          <Tableau
+            objective={dualObjective}
+            objFunction={dualObjFunction}
+            constraints={dualConstraints}
+            equalityConstraints={dualEqConstraints}
+            reset={reset}
+          />
+        </PageContent>
+      </ContentWrapper>
     </PageWrapper>
   );
 }

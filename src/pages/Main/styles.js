@@ -37,64 +37,46 @@ export const PageLogo = styled.div`
   }
 `;
 
+export const ContentWrapper = styled.div`
+  height: 80%;
+  width: 98%;
+
+  display: flex;
+
+  > div:first-child {
+    margin-left: -5px;
+    margin-right: 10px;
+  }
+  /* justify-content: space-evenly; */
+`;
+
 export const PageWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;
 
 export const PageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+
   @media only screen and (max-width: 1000px) {
     display: none;
   }
 
-  height: 80%;
-  width: 80%;
+  /* height: 80%;
+  width: 80%; */
   border-radius: 10px;
+  min-width: 50%;
 
   background-color: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-  background-color: transparent;
-  perspective: 1000px;
-`;
-
-export const Inner = styled.div`
-  height: 100%;
-
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-
-  ${props =>
-    props.converted &&
-    css`
-      transform: rotateY(180deg);
-    `}
-`;
-
-export const Flip = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  background-color: #fff;
-
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-`;
-
-export const Front = styled(Flip)``;
-
-export const Back = styled(Flip)`
-  transform: rotateY(180deg);
+  :hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
 `;
 
 export const Container = styled.div`
