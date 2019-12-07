@@ -13,11 +13,13 @@ import {
   DynamicSide,
   Equation,
   Variable,
-  AddConstraintButton,
-  AddVariableButton,
+  ConstraintButton,
+  VariableButton,
   EqualityConstraints,
   ConversionButton,
-  ContentWrapper
+  ContentWrapper,
+  ConstraintButtonGroup,
+  VariableButtonGroup
 } from "./styles";
 import Logo from "../../assets/img/Logo.png";
 
@@ -75,7 +77,6 @@ export default function Main() {
     signalOptions[0],
     signalOptions[0]
   ]);
-  const [converted, setConverted] = useState(false);
 
   const [dualObjective, setDualObjective] = useState();
   const [dualObjFunction, setDualObjFunction] = useState();
@@ -110,8 +111,6 @@ export default function Main() {
         signal: swapSignal(swap, eqConst)
       }))
     );
-
-    setConverted(true);
   }
 
   function swapSignal(swap, signal) {
@@ -127,33 +126,6 @@ export default function Main() {
     } else {
       return signal;
     }
-  }
-
-  function reset() {
-    setObjective(objectiveOptions[0]);
-    setObjFunction([6, 4]);
-    setConstraints([
-      {
-        values: [1, 2, 6],
-        signal: signalOptions[0]
-      },
-      {
-        values: [3, 4, 8],
-        signal: signalOptions[1]
-      }
-    ]);
-    setEqualityConstraints([signalOptions[0], signalOptions[0]]);
-    setConverted(false);
-  }
-
-  function buttonOrSpan(actualIdx, arr) {
-    return actualIdx === arr.length - 1 ? (
-      <AddVariableButton type="button" onClick={addVariable}>
-        +
-      </AddVariableButton>
-    ) : (
-      <span>+</span>
-    );
   }
 
   function hasSumSymbol(actualIdx, arr) {
@@ -177,6 +149,21 @@ export default function Main() {
     setEqualityConstraints([...equalityConstraints, signalOptions[0]]);
   }
 
+  function removeVariable() {
+    setObjFunction(objFunction.slice(0, -1));
+    setConstraints(
+      constraints.map(constraint => {
+        const newValues = [...constraint.values];
+        newValues.splice(newValues.length - 2, 1);
+        return {
+          ...constraint,
+          values: newValues
+        };
+      })
+    );
+    setEqualityConstraints(equalityConstraints.slice(0, -1));
+  }
+
   function addConstraint() {
     const constraintLength = constraints[0].values.length;
     setConstraints([
@@ -186,6 +173,10 @@ export default function Main() {
         signal: signalOptions[0]
       }
     ]);
+  }
+
+  function removeConstraint() {
+    setConstraints(constraints.slice(0, -1));
   }
 
   function handleSignalChange(value, constraintIdx) {
@@ -276,9 +267,15 @@ export default function Main() {
               )
             }
           />
-          <AddVariableButton type="button" onClick={addVariable}>
-            +
-          </AddVariableButton>
+          <VariableButtonGroup>
+            <VariableButton type="button" onClick={addVariable}>
+              +
+            </VariableButton>
+
+            <VariableButton type="button" onClick={removeVariable}>
+              -
+            </VariableButton>
+          </VariableButtonGroup>
         </Variable>
       );
     }
@@ -357,9 +354,14 @@ export default function Main() {
                   </li>
                 ))}
               </EqualityConstraints>
-              <AddConstraintButton type="button" onClick={addConstraint}>
-                +
-              </AddConstraintButton>
+              <ConstraintButtonGroup>
+                <ConstraintButton type="button" onClick={addConstraint}>
+                  +
+                </ConstraintButton>
+                <ConstraintButton type="button" onClick={removeConstraint}>
+                  -
+                </ConstraintButton>
+              </ConstraintButtonGroup>
             </DynamicSide>
           </Container>
           <ConversionButton>
@@ -374,7 +376,6 @@ export default function Main() {
             objFunction={dualObjFunction}
             constraints={dualConstraints}
             equalityConstraints={dualEqConstraints}
-            reset={reset}
           />
         </PageContent>
       </ContentWrapper>

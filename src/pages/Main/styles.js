@@ -131,6 +131,9 @@ export const Equation = styled.ul`
 `;
 
 export const Variable = styled.li`
+  display: flex;
+  align-items: center;
+
   input[type="number"] {
     width: 80px;
     height: 40px;
@@ -144,7 +147,7 @@ export const Variable = styled.li`
   }
 `;
 
-export const AddButton = styled.button`
+export const Button = styled.button`
   background-color: rgba(116, 185, 255, 0.1);
   border: 1.2px gray dashed;
   transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -156,13 +159,13 @@ export const AddButton = styled.button`
   }
 `;
 
-export const AddConstraintButton = styled(AddButton)`
+export const ConstraintButton = styled(Button)`
   width: 100%;
   height: 30px;
   margin-top: 5px;
 `;
 
-export const AddVariableButton = styled(AddButton)`
+export const VariableButton = styled(Button)`
   width: 30px;
   height: 40px;
   margin-left: 5px;
@@ -206,6 +209,45 @@ export const EqualityConstraints = styled.ul`
 
     span ~ span {
       margin-right: 10px;
+    }
+  }
+`;
+
+export const ConstraintButtonGroup = styled.div`
+  display: flex;
+
+  button:first-child {
+    border-right: none;
+  }
+
+  button + button {
+    font-size: 18px;
+    border-left: none;
+    background-color: rgba(194, 54, 22, 0.2);
+    :hover {
+      background-color: rgba(194, 54, 22, 0.4);
+    }
+  }
+`;
+
+export const VariableButtonGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  button {
+    height: 20px;
+  }
+
+  button:first-child {
+    border-bottom: none;
+  }
+
+  button + button {
+    font-size: 16px;
+    border-top: none;
+    background-color: rgba(194, 54, 22, 0.2);
+    :hover {
+      background-color: rgba(194, 54, 22, 0.4);
     }
   }
 `;
