@@ -14,6 +14,7 @@ export const Container = styled.div`
   span {
     font-weight: bold;
     font-size: 18px;
+    min-width: 35px;
   }
 
   input {
@@ -43,6 +44,9 @@ export const StaticSide = styled.div`
       }
     }
   }
+
+  span {
+  }
 `;
 
 export const DynamicSide = styled.div``;
@@ -54,6 +58,9 @@ export const Equation = styled.ul`
 `;
 
 export const Variable = styled.li`
+  display: flex;
+  align-items: center;
+
   input[type="number"] {
     width: 80px;
     height: 40px;
@@ -64,6 +71,10 @@ export const Variable = styled.li`
     display: inline-block;
     width: 40px;
     margin-left: 5px;
+  }
+
+  span:first-of-type {
+    min-width: 35px;
   }
 `;
 

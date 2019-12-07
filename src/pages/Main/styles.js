@@ -145,6 +145,10 @@ export const Variable = styled.li`
     width: 40px;
     margin-left: 5px;
   }
+
+  span:first-of-type {
+    min-width: 35px;
+  }
 `;
 
 export const Button = styled.button`

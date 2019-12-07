@@ -29,8 +29,7 @@ export default function Tableau({
   objective,
   objFunction = [],
   constraints = [],
-  equalityConstraints = [],
-  reset
+  equalityConstraints = []
 }) {
   function hasSumSymbol(actualIdx, arr) {
     return actualIdx !== arr.length - 1 && <span>+</span>;
