@@ -44,9 +44,6 @@ export const StaticSide = styled.div`
       }
     }
   }
-
-  span {
-  }
 `;
 
 export const DynamicSide = styled.div``;

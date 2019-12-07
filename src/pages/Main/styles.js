@@ -26,26 +26,31 @@ export const PageLogo = styled.div`
     -webkit-text-fill-color: transparent;
   }
 
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 1100px) {
     width: 250px;
+    text-align: center;
+    padding: 10px;
+
     ::after {
-      content: "Esta ferramenta não funciona em telas pequenas :(";
+      content: "Esta ferramenta não funciona em telas menores que 1100px :(";
       font-family: "Montserrat", sans-serif;
       color: #aaa;
-      text-align: center;
     }
   }
 `;
 
 export const ContentWrapper = styled.div`
+  display: flex;
   height: 80%;
   width: 98%;
-
-  display: flex;
 
   > div:first-child {
     margin-left: -5px;
     margin-right: 10px;
+  }
+
+  @media only screen and (max-width: 1100px) {
+    display: none;
   }
 `;
 
@@ -61,12 +66,10 @@ export const PageContent = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 1100px) {
     display: none;
   }
 
-  /* height: 80%;
-  width: 80%; */
   border-radius: 10px;
   min-width: 50%;
 
