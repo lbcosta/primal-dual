@@ -85,11 +85,28 @@ export default function Main() {
   const [dualConstraints, setDualConstraints] = useState();
   const [dualEqConstraints, setDualEqConstraints] = useState();
 
-  function reset() {
+  function cleanDual() {
     setDualObjective();
     setDualObjFunction();
     setDualConstraints();
     setDualEqConstraints();
+  }
+
+  function reset() {
+    setObjective(objectiveOptions[0]);
+    setObjFunction([6, 4]);
+    setConstraints([
+      {
+        values: [1, 2, 6],
+        signal: signalOptions[0]
+      },
+      {
+        values: [3, 4, 8],
+        signal: signalOptions[1]
+      }
+    ]);
+    setEqualityConstraints([signalOptions[0], signalOptions[0]]);
+    cleanDual();
   }
 
   function convert() {
@@ -397,6 +414,7 @@ export default function Main() {
               objFunction={dualObjFunction}
               constraints={dualConstraints}
               equalityConstraints={dualEqConstraints}
+              cleanDual={cleanDual}
               reset={reset}
             />
           ) : (
@@ -419,12 +437,19 @@ export default function Main() {
                 Para <b>adicionar</b> ou <b>remover</b> uma <b>nova variável</b>{" "}
                 às equações, basta clicar no botão de "+" azul pequeno
                 (adicionar) ou no botão de "-" vermelho pequeno (remover) ao
-                lado do das linhas do tableau.
+                lado das linhas do tableau.
               </li>
               <li>
                 Da mesma forma, para{" "}
                 <b>adicionar ou remover restrições do tableau</b>, clique nos
                 respectivos botões abaixo do tableau.
+              </li>
+              <li>
+                Após converter um tableau, dois botões estarão disponíveis:{" "}
+                <b>"Limpar"</b> e <b>"Reiniciar"</b>. O botão de "Limpar" apaga
+                a forma Dual, mas preserva a forma Primal. Enquanto o botão de
+                "Reiniciar", limpa a forma Dual e traz o exemplo inicial da
+                forma Primal de volta.
               </li>
               <li>
                 Lembre-se:{" "}

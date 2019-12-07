@@ -31,6 +31,7 @@ export default function Tableau({
   objFunction = [],
   constraints = [],
   equalityConstraints = [],
+  cleanDual,
   reset
 }) {
   function hasSumSymbol(actualIdx, arr) {
@@ -109,8 +110,15 @@ export default function Tableau({
       </Container>
 
       <ConversionButton>
-        <button type="button" onClick={reset}>
+        <button type="button" onClick={cleanDual}>
           Limpar
+        </button>
+        <button
+          type="button"
+          onClick={reset}
+          style={objective ? { display: "block" } : { display: "none" }}
+        >
+          Reiniciar
         </button>
       </ConversionButton>
     </>

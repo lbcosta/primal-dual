@@ -76,6 +76,7 @@ export const Variable = styled.li`
 `;
 
 export const ConversionButton = styled.div`
+  display: flex;
   flex: 1;
 
   button {
@@ -96,6 +97,13 @@ export const ConversionButton = styled.div`
 
     :hover {
       background-color: #0984e3;
+    }
+  }
+
+  button + button {
+    background-color: #555;
+    :hover {
+      background-color: #333;
     }
   }
 `;
