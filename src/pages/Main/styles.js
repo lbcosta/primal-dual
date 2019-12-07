@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const PageLogo = styled.div`
   background-color: #fff;
@@ -47,7 +47,6 @@ export const ContentWrapper = styled.div`
     margin-left: -5px;
     margin-right: 10px;
   }
-  /* justify-content: space-evenly; */
 `;
 
 export const PageWrapper = styled.div`
@@ -201,9 +200,12 @@ export const ConversionButton = styled.div`
 `;
 
 export const EqualityConstraints = styled.ul`
+  display: flex;
   margin-top: 10px;
+
   li {
     display: inline;
+    min-width: 120px;
 
     > div {
       display: inline-block;
@@ -253,5 +255,21 @@ export const VariableButtonGroup = styled.div`
     :hover {
       background-color: rgba(194, 54, 22, 0.4);
     }
+  }
+`;
+
+export const Guide = styled.ul`
+  padding: 20px 40px;
+  list-style: disc;
+  color: #777;
+
+  li:first-child {
+    color: #444;
+    list-style: none;
+    font-size: 1.15em;
+  }
+
+  li {
+    margin-bottom: 20px;
   }
 `;

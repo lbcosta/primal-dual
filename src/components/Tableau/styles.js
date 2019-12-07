@@ -93,20 +93,23 @@ export const ConversionButton = styled.div`
     font-size: 16px;
 
     color: #fff;
-    background-color: #c23616;
+    background-color: #74b9ff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     transition: background-color 150ms ease-in-out;
 
     :hover {
-      background-color: #87250f;
+      background-color: #0984e3;
     }
   }
 `;
 
 export const EqualityConstraints = styled.ul`
+  display: flex;
   margin-top: 10px;
+
   li {
     display: inline;
+    min-width: 120px;
 
     > div {
       display: inline-block;

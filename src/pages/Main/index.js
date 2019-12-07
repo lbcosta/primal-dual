@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import { toast } from "react-toastify";
 import Tableau from "../../components/Tableau";
 
 import { FaGreaterThanEqual, FaLessThanEqual, FaEquals } from "react-icons/fa";
@@ -19,7 +20,8 @@ import {
   ConversionButton,
   ContentWrapper,
   ConstraintButtonGroup,
-  VariableButtonGroup
+  VariableButtonGroup,
+  Guide
 } from "./styles";
 import Logo from "../../assets/img/Logo.png";
 
@@ -82,6 +84,13 @@ export default function Main() {
   const [dualObjFunction, setDualObjFunction] = useState();
   const [dualConstraints, setDualConstraints] = useState();
   const [dualEqConstraints, setDualEqConstraints] = useState();
+
+  function reset() {
+    setDualObjective();
+    setDualObjFunction();
+    setDualConstraints();
+    setDualEqConstraints();
+  }
 
   function convert() {
     const swap = objective.value === "min";
@@ -150,18 +159,24 @@ export default function Main() {
   }
 
   function removeVariable() {
-    setObjFunction(objFunction.slice(0, -1));
-    setConstraints(
-      constraints.map(constraint => {
-        const newValues = [...constraint.values];
-        newValues.splice(newValues.length - 2, 1);
-        return {
-          ...constraint,
-          values: newValues
-        };
-      })
-    );
-    setEqualityConstraints(equalityConstraints.slice(0, -1));
+    const hasAtLeastTwoVariables = constraints[0].values.length > 2;
+
+    if (hasAtLeastTwoVariables) {
+      setObjFunction(objFunction.slice(0, -1));
+      setConstraints(
+        constraints.map(constraint => {
+          const newValues = [...constraint.values];
+          newValues.splice(newValues.length - 2, 1);
+          return {
+            ...constraint,
+            values: newValues
+          };
+        })
+      );
+      setEqualityConstraints(equalityConstraints.slice(0, -1));
+    } else {
+      toast.error("É necessária pelo menos uma variável");
+    }
   }
 
   function addConstraint() {
@@ -176,7 +191,12 @@ export default function Main() {
   }
 
   function removeConstraint() {
-    setConstraints(constraints.slice(0, -1));
+    const hasAtLeastOneConstraint = constraints.length > 1;
+    if (hasAtLeastOneConstraint) {
+      setConstraints(constraints.slice(0, -1));
+    } else {
+      toast.error("É necessária pelo menos uma restrição");
+    }
   }
 
   function handleSignalChange(value, constraintIdx) {
@@ -371,12 +391,48 @@ export default function Main() {
           </ConversionButton>
         </PageContent>
         <PageContent>
-          <Tableau
-            objective={dualObjective}
-            objFunction={dualObjFunction}
-            constraints={dualConstraints}
-            equalityConstraints={dualEqConstraints}
-          />
+          {dualObjective ? (
+            <Tableau
+              objective={dualObjective}
+              objFunction={dualObjFunction}
+              constraints={dualConstraints}
+              equalityConstraints={dualEqConstraints}
+              reset={reset}
+            />
+          ) : (
+            <Guide>
+              <li>
+                Olá! Esta é uma ferramenta de conversão do tableau simplex em
+                sua forma primal para a forma dual. Quando o botão "Converter"
+                for pressionado, a forma dual aparecerá nesse quadro.
+              </li>
+              <li>
+                Para <b>alterar os valores</b> dos números, basta clicá-los e
+                digitar um novo número, ou usar as setas ao lado do número.
+              </li>
+              <li>
+                Para <b>mudar o objetivo do tableau</b>, basta clicar em "MIN"
+                ou "MAX" e escolher a nova opção. Os simbolos de "menor igual" e
+                "maior igual" podem ser alterados da mesma forma.
+              </li>
+              <li>
+                Para <b>adicionar</b> ou <b>remover</b> uma <b>nova variável</b>{" "}
+                às equações, basta clicar no botão de "+" azul pequeno
+                (adicionar) ou no botão de "-" vermelho pequeno (remover) ao
+                lado do das linhas do tableau.
+              </li>
+              <li>
+                Da mesma forma, para{" "}
+                <b>adicionar ou remover restrições do tableau</b>, clique nos
+                respectivos botões abaixo do tableau.
+              </li>
+              <li>
+                Lembre-se:{" "}
+                <b>É necessária pelo menos uma variável e uma restrição</b> para
+                a conversão ser possível.
+              </li>
+            </Guide>
+          )}
         </PageContent>
       </ContentWrapper>
     </PageWrapper>

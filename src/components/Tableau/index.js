@@ -7,7 +7,8 @@ import {
   DynamicSide,
   Equation,
   Variable,
-  EqualityConstraints
+  EqualityConstraints,
+  ConversionButton
 } from "./styles";
 
 const selectCustomStyle = {
@@ -29,7 +30,8 @@ export default function Tableau({
   objective,
   objFunction = [],
   constraints = [],
-  equalityConstraints = []
+  equalityConstraints = [],
+  reset
 }) {
   function hasSumSymbol(actualIdx, arr) {
     return actualIdx !== arr.length - 1 && <span>+</span>;
@@ -105,6 +107,12 @@ export default function Tableau({
           </EqualityConstraints>
         </DynamicSide>
       </Container>
+
+      <ConversionButton>
+        <button type="button" onClick={reset}>
+          Limpar
+        </button>
+      </ConversionButton>
     </>
   );
 }
