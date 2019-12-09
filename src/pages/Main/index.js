@@ -51,6 +51,21 @@ const signalOptions = [
   }
 ];
 
+const equalityOptions = [
+  {
+    value: "<=",
+    label: <FaLessThanEqual />
+  },
+  {
+    value: ">=",
+    label: <FaGreaterThanEqual />
+  },
+  {
+    value: "livre",
+    label: "livre"
+  }
+];
+
 const selectCustomStyle = {
   dropdownIndicator: (provided, state) => ({
     ...provided,
@@ -76,8 +91,8 @@ export default function Main() {
     }
   ]);
   const [equalityConstraints, setEqualityConstraints] = useState([
-    signalOptions[0],
-    signalOptions[0]
+    equalityOptions[0],
+    equalityOptions[0]
   ]);
 
   const [dualObjective, setDualObjective] = useState();
@@ -121,10 +136,12 @@ export default function Main() {
     );
 
     setDualEqConstraints(
-      constraints.map(constraint => swapSignal(!swap, constraint.signal))
+      constraints.map(constraint =>
+        swapSignal(!swap, constraint.signal, { equality: true })
+      )
     );
 
-    const variableMatrix = constraints.map((constraint, constraintIdx) =>
+    const variableMatrix = constraints.map(constraint =>
       constraint.values.slice(0, -1)
     );
     const dualVariableMatrix = variableMatrix[0].map((col, i) =>
@@ -134,12 +151,12 @@ export default function Main() {
     setDualConstraints(
       equalityConstraints.map((eqConst, eqConstIdx) => ({
         values: dualVariableMatrix[eqConstIdx],
-        signal: swapSignal(swap, eqConst)
+        signal: swapSignal(swap, eqConst, { equality: false })
       }))
     );
   }
 
-  function swapSignal(swap, signal) {
+  function swapSignal(swap, signal, options) {
     if (swap) {
       switch (signal.value) {
         case "<=":
@@ -147,10 +164,18 @@ export default function Main() {
         case ">=":
           return signalOptions[0];
         default:
-          return signalOptions[2];
+          if (options.equality) {
+            return equalityOptions[2];
+          } else {
+            return signalOptions[2];
+          }
       }
     } else {
-      return signal;
+      if (options.equality && signal.value === "=") {
+        return equalityOptions[2];
+      } else {
+        return signal;
+      }
     }
   }
 
@@ -383,10 +408,12 @@ export default function Main() {
                       onChange={value =>
                         handleEqualityConstraintSignalChange(value, idx)
                       }
-                      options={signalOptions}
+                      options={equalityOptions}
                       styles={selectCustomStyle}
                     />
-                    <span>0</span>
+                    {equalityConstraints[idx].value !== "livre" && (
+                      <span>0</span>
+                    )}
                     {idx !== equalityConstraints.length - 1 && <span>,</span>}
                   </li>
                 ))}

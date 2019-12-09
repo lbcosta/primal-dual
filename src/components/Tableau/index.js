@@ -1,5 +1,6 @@
 import React from "react";
 import Select from "react-select";
+import { FaEquals } from "react-icons/fa";
 
 import {
   Container,
@@ -50,9 +51,16 @@ export default function Tableau({
         </Variable>
       );
     } else {
+      let parsedSignal = signal;
+      if (signal.value === "livre") {
+        parsedSignal = {
+          value: "=",
+          label: <FaEquals />
+        };
+      }
       return (
         <Variable key={"vv-" + value}>
-          <Select value={signal} styles={selectCustomStyle} isDisabled />
+          <Select value={parsedSignal} styles={selectCustomStyle} isDisabled />
           <input type="number" value={value} disabled />
         </Variable>
       );
@@ -101,7 +109,7 @@ export default function Tableau({
                   styles={selectCustomStyle}
                   isDisabled
                 />
-                <span>0</span>
+                {equalityConstraints[idx].value !== "livre" && <span>0</span>}
                 {idx !== equalityConstraints.length - 1 && <span>,</span>}
               </li>
             ))}
